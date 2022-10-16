@@ -1,0 +1,85 @@
+#!/bin/bash
+
+VERSION=v0.19.0
+
+set -e
+
+help() {
+  echo "Usage:"
+  echo "  zmicro package install lazydocker <args...>"
+  echo ""
+}
+
+install() {
+  # get system os/arch/bin_path
+  local arch="$(os::arch)"
+  local os="Linux"
+  local bin_path=/usr/bin
+
+  if [ "$(os::is_macos)" = "true" ]; then
+    os="Darwin"
+    bin_path=/usr/local/bin
+  fi
+
+  if [ "$arch" = "amd64" ]; then
+    arch="x86_64"
+  elif [ "$arch" = "arm64" ]; then
+    arch="arm64"
+  else
+    log::error "unknown architecture: $arch"
+    exit 1
+  fi
+
+  # prepare vars
+  local name="lazydocker"
+  local tmp_dir="/tmp/$name"
+  local tmp_file="/tmp/$name.tar.gz"
+  local tar_gz_bin="./$name"
+  local user_bin="$bin_path/$name"
+
+  # prepare context
+  mkdir -p $tmp_dir
+  cd $tmp_dir
+
+  # reference: https://github.com/jesseduffield/lazydocker/releases
+  # example:
+  #   https://github.com/jesseduffield/lazydocker/releases/download/v0.19.0/lazydocker_0.19.0_Darwin_arm64.tar.gz
+  #   https://github.com/jesseduffield/lazydocker/releases/download/v0.19.0/lazydocker_0.19.0_Darwin_x86_64.tar.gz
+  # generate url
+  local url="https://github.com/jesseduffield/lazydocker/releases/download/$VERSION/${name}_${VERSION#v}_${os}_${arch}.tar.gz"
+  log::debug "[package][$name] url: $url"
+
+  # download
+  os::curl -fSL $url -o $tmp_file
+
+  # extract
+  tar -zxvf $tmp_file >>/dev/null 2>&1
+
+  # install
+  sudo mv $tar_gz_bin $user_bin
+
+  # clean
+  rm -rf $tmp_dir
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  install
+  if [ $? -eq 0 ]; then
+    log::success "install lazydocker success."
+    exit 0
+  else
+    log::error "install lazydocker failed."
+    exit 1
+  fi
+}
+
+run() {
+  core $@
+}
+
+run $@
