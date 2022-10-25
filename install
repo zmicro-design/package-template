@@ -11,14 +11,21 @@ help() {
 }
 
 install() {
-  # get system os/arch/bin_path
+  # prepare vars
+  local name="lazydocker"
+  # get system os/arch
   local arch="$(os::arch)"
   local os="Linux"
-  local bin_path=/usr/bin
+  # usr_bin_dir
+  local usr_bin_dir=/usr/bin
+  local tmp_dir="/tmp/$name"
+  # files
+  local tmp_file="$name.tar.gz"
+  local bin_file="$name"
 
   if [ "$(os::is_macos)" = "true" ]; then
     os="Darwin"
-    bin_path=/usr/local/bin
+    usr_bin_dir=/usr/local/bin
   fi
 
   if [ "$arch" = "amd64" ]; then
@@ -30,13 +37,6 @@ install() {
     exit 1
   fi
 
-  # prepare vars
-  local name="lazydocker"
-  local tmp_dir="/tmp/$name"
-  local tmp_file="/tmp/$name.tar.gz"
-  local tar_gz_bin="./$name"
-  local user_bin="$bin_path/$name"
-
   # prepare context
   mkdir -p $tmp_dir
   cd $tmp_dir
@@ -47,7 +47,7 @@ install() {
   #   https://github.com/jesseduffield/lazydocker/releases/download/v0.19.0/lazydocker_0.19.0_Darwin_x86_64.tar.gz
   # generate url
   local url="https://github.com/jesseduffield/lazydocker/releases/download/$VERSION/${name}_${VERSION#v}_${os}_${arch}.tar.gz"
-  log::debug "[package][$name] url: $url"
+  log::debug "[package][$name][$os][$arch] url: $url"
 
   # download
   os::curl -fSL $url -o $tmp_file
@@ -56,7 +56,7 @@ install() {
   tar -zxvf $tmp_file >>/dev/null 2>&1
 
   # install
-  sudo mv $tar_gz_bin $user_bin
+  sudo mv $bin_file $usr_bin_dir
 
   # clean
   rm -rf $tmp_dir

@@ -43,21 +43,23 @@ jobs:
             状态: 构建失败（https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}）
 
   testing:
-    runs-on: ubuntu-latest
-    container: whatwewant/zmicro:v1
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
 
     steps:
-      - name: Get Current Date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Install Zmicro
+        run: curl -o- https://raw.githubusercontent.com/zcorky/zmicro/master/install | bash
 
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: "0"
+      - name: Update Zmicro
+        run: zmicro update -a
 
       - name: Install
-        run: |
-          zmicro package install lazydocker
+        run: zmicro package install lazydocker
 
       - name: version
         run: zmicro lazydocker version
