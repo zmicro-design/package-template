@@ -50,7 +50,7 @@ install() {
   log::debug "[package][$name][$os][$arch] url: $url"
 
   # download
-  os::curl -fSL $url -o $tmp_file
+  os::curl --progress-bar -fSL $url -o $tmp_file
 
   # extract
   tar -zxvf $tmp_file >>/dev/null 2>&1
