@@ -61,8 +61,8 @@ jobs:
       - name: Install
         run: zmicro package install lazydocker
 
-      - name: version
-        run: zmicro lazydocker version
-
       - name: help
         run: zmicro lazydocker help
+
+      - name: version
+        run: zmicro lazydocker version

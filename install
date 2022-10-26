@@ -15,18 +15,13 @@ install() {
   local name="lazydocker"
   # get system os/arch
   local arch="$(os::arch)"
-  local os="Linux"
+  local kernel="$(os::kernel)"
   # usr_bin_dir
-  local usr_bin_dir=/usr/bin
+  local usr_bin_dir=$(os::usr_bin_dir)
   local tmp_dir="/tmp/$name"
   # files
   local tmp_file="$name.tar.gz"
   local bin_file="$name"
-
-  if [ "$(os::is_macos)" = "true" ]; then
-    os="Darwin"
-    usr_bin_dir=/usr/local/bin
-  fi
 
   if [ "$arch" = "amd64" ]; then
     arch="x86_64"
@@ -46,8 +41,8 @@ install() {
   #   https://github.com/jesseduffield/lazydocker/releases/download/v0.19.0/lazydocker_0.19.0_Darwin_arm64.tar.gz
   #   https://github.com/jesseduffield/lazydocker/releases/download/v0.19.0/lazydocker_0.19.0_Darwin_x86_64.tar.gz
   # generate url
-  local url="https://github.com/jesseduffield/lazydocker/releases/download/$VERSION/${name}_${VERSION#v}_${os}_${arch}.tar.gz"
-  log::debug "[package][$name][$os][$arch] url: $url"
+  local url="https://github.com/jesseduffield/lazydocker/releases/download/$VERSION/${name}_${VERSION#v}_${kernel}_${arch}.tar.gz"
+  log::debug "[package][$name][$kernel][$arch] url: $url"
 
   # download
   os::curl --progress-bar -fSL $url -o $tmp_file
