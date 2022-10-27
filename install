@@ -16,6 +16,7 @@ install() {
   # get system os/arch
   local arch="$(os::arch)"
   local kernel="$(os::kernel)"
+  local platform="$(os::platform)"
   # usr_bin_dir
   local usr_bin_dir=$(os::usr_bin_dir)
   local tmp_dir="/tmp/$name"

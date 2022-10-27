@@ -9,7 +9,7 @@ help() {
 }
 
 version() {
-  lazydocker version
+  lazydocker --version
 }
 
 core() {
