@@ -2,14 +2,14 @@
 
 help() {
   echo "Usage:"
-  echo "  zmicro lazydocker <args ...>"
+  echo "  zmicro mtg <args ...>"
   echo ""
 
-  lazydocker --help
+  mtg --help
 }
 
 version() {
-  lazydocker --version
+  mtg --version
 }
 
 core() {
@@ -21,7 +21,7 @@ core() {
     version
     ;;
   *)
-    lazydocker "$@"
+    mtg "$@"
     ;;
   esac
 }
