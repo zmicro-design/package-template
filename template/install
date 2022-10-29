@@ -27,7 +27,7 @@ run() {
 }
 
 if [ "$1" = "ONE_LINE" ]; then
-  command -v zmicro # >>/dev/null 2>&1
+  command -v zmicro >>/dev/null 2>&1
   if [ $? -ne 0 ]; then
     curl -o- https://raw.githubusercontent.com/zcorky/zmicro/master/install | sh
   fi
