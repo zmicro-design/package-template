@@ -1,2 +1,3 @@
+NAME=package
 VERSION=v1.1.0
-DESCRIPTION="Package mtg - Highly opinionated MTPROTO proxy for Telegram"
+DESCRIPTION="A package template use for template plugin."

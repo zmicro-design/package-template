@@ -1,13 +1,5 @@
 #!/bin/bash
 
-VERSION=v2.1.7
-
-help() {
-  echo "Usage:"
-  echo "  zmicro package install mtg <args...>"
-  echo ""
-}
-
 install() {
   # prepare vars
   local name="mtg"
@@ -47,35 +39,4 @@ install() {
   rm -rf $tmp_dir
 }
 
-core() {
-  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-    help
-    exit 0
-  fi
-
-  install
-  if [ $? -eq 0 ]; then
-    log::success "install mtg success."
-    exit 0
-  else
-    log::error "install mtg failed."
-    exit 1
-  fi
-}
-
-run() {
-  core "$@"
-}
-
-if [ "$1" = "ONE_LINE" ]; then
-  command -v zmicro # >>/dev/null 2>&1
-  if [ $? -ne 0 ]; then
-    curl -o- https://raw.githubusercontent.com/zcorky/zmicro/master/install | sh
-  fi
-
-  zmicro package install mtg
-else
-  set -e
-  
-  run "$@"
-fi
+export -f install
