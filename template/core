@@ -1,21 +1,21 @@
 #!/bin/bash
 
 install() {
+  # get system os/arch
+  local arch="$PACKAGE_OS_ARCH"
+  local kernel="$PACKAGE_OS_KERNEL"
+  local platform="$PACKAGE_OS_PLATFORM"
+  # usr_bin_dir
+  local usr_bin_dir="$PACKAGE_USER_BIN_DIR"
+  local tmp_dir="$PACKAGE_TMP_DIR"
+
   # prepare vars
   local name="mtg"
-  # get system os/arch
-  local arch="$(os::arch)"
-  local kernel="$(os::kernel)"
-  local platform="$(os::platform)"
-  # usr_bin_dir
-  local usr_bin_dir=$(os::usr_bin_dir)
-  local tmp_dir="/tmp/$name"
   # files
   local tmp_file="$name.tar.gz"
-  local bin_file="./${name}-${VERSION#v}-${platform}-${arch}/$name"
+  local bin_file="./${name}-${PACKAGE_CORE_VERSION#v}-${platform}-${arch}/$name"
 
   # prepare context
-  mkdir -p $tmp_dir
   cd $tmp_dir
 
   # reference: https://github.com/9seconds/mtg/releases
@@ -23,11 +23,11 @@ install() {
   #   https://github.com/9seconds/mtg/releases/download/v2.1.7/mtg-2.1.7-darwin-arm64.tar.gz
   #   https://github.com/9seconds/mtg/releases/download/v2.1.7/mtg-2.1.7-darwin-amd64.tar.gz
   # generate url
-  local url="https://github.com/9seconds/mtg/releases/download/$VERSION/${name}-${VERSION#v}-${platform}-${arch}.tar.gz"
+  local url="https://github.com/9seconds/mtg/releases/download/$PACKAGE_CORE_VERSION/${name}-${PACKAGE_CORE_VERSION#v}-${platform}-${arch}.tar.gz"
   log::debug "[package][$name][$kernel][$arch] url: $url"
 
   # download
-  os::curl --progress-bar -fSL $url -o $tmp_file
+  os::download $tmp_file $url
 
   # extract
   tar -zxvf $tmp_file >>/dev/null 2>&1
