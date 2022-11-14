@@ -34,7 +34,7 @@ install() {
 
   # extract
   log::info "[$(timestamp)][package][$name] extracting ..."
-  os::tar -zxvf $tmp_file >>/dev/null 2>&1
+  os::extract $tmp_file
 
   # make executable
   log::info "[$(timestamp)][package][$name] making executable ..."
