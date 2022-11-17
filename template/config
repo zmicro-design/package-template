@@ -1,3 +1,5 @@
 #!/bin/bash
 
+export PACKAGE_CORE_NAME="mtg"
 export PACKAGE_CORE_VERSION=v2.1.7
+export PACKAGE_CORE_RELEASE_DOWNLOAD="https://github.com/9seconds/mtg/releases/download"
