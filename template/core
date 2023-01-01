@@ -37,13 +37,17 @@ install() {
   log::info "[$(timestamp)][package][$name] extracting ..."
   os::extract $tmp_file
 
-  # make executable
-  log::info "[$(timestamp)][package][$name] making executable ..."
-  chmod 755 $bin_file
+  # # make executable
+  # log::info "[$(timestamp)][package][$name] making executable ..."
+  # chmod 755 $bin_file
+
+  # # install
+  # log::info "[$(timestamp)][package][$name] installing ..."
+  # sudo mv $bin_file $usr_bin_dir
 
   # install
   log::info "[$(timestamp)][package][$name] installing ..."
-  sudo mv $bin_file $usr_bin_dir
+  os::install $bin_file $usr_bin_dir
 
   # clean
   log::info "[$(timestamp)][package][$name] cleaning ..."
