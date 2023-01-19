@@ -13,6 +13,14 @@ version() {
 }
 
 core() {
+  # context directory
+  local context="$ZMICRO_PACKAGES_DATA_PATH/mtg"
+  if [ ! -d "$context" ]; then
+    mkdir -p $context
+  fi
+  cd $context
+  # context directory
+
   case $1 in
   -h | --help | help)
     help
