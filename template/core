@@ -17,7 +17,7 @@ install() {
   # files
   local tmp_file="$name.tar.gz"
   local source_bin_file="./${name}-${PACKAGE_CORE_VERSION#v}-${platform}-${arch}/$name"
-  local target_bin_file="$usr_bin_dir/$name"
+  # local target_bin_file="$usr_bin_dir/$name"
 
   # prepare context
   cd $tmp_dir
@@ -40,7 +40,7 @@ install() {
 
   # install
   log::info "[$(timestamp)][package][$name] installing ..."
-  os::install $source_bin_file $target_bin_file
+  os::install $source_bin_file $usr_bin_dir $name
 
 # Complex like maven-mvnd
 #   # make executable
