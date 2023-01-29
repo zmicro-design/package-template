@@ -1,5 +1,9 @@
 #!/bin/bash
 
+export PACKAGE_NAME="mtg"
+import "$ZMICRO_PACKAGES_PATH/$PACKAGE_NAME/config"
+import "$ZMICRO_PACKAGES_PATH/$PACKAGE_NAME/core"
+
 help() {
   echo "Usage:"
   echo "  zmicro mtg <args ...>"
