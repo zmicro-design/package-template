@@ -12,14 +12,13 @@ core() {
     exit 0
   fi
 
-  install
-  if [ $? -eq 0 ]; then
-    log::success "install ${PACKAGE_NAME} success."
-    exit 0
-  else
-    log::error "install ${PACKAGE_NAME} failed."
-    exit 1
+  install "$@"
+  if [ "$?" != "0" ]; then
+    log::error "[$(timstamp)] failed to install ${PACKAGE_NAME}."
+    return 1
   fi
+
+  log::success "[$(timstamp)] succeed to install ${PACKAGE_NAME}."
 }
 
 run() {
@@ -35,6 +34,6 @@ if [ "$1" = "ONE_LINE" ]; then
   zmicro package install mtg
 else
   set -e
-  
+
   run "$@"
 fi
