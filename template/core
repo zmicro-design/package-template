@@ -7,6 +7,7 @@ install() {
   log::info "[$(timestamp)][package][$name] preparing ..."
 
   # get system os/arch
+  local os="$PACKAGE_OS"
   local arch="$PACKAGE_OS_ARCH"
   local kernel="$PACKAGE_OS_KERNEL"
   local platform="$PACKAGE_OS_PLATFORM"
@@ -36,7 +37,35 @@ install() {
   #   log::error "[$(timestamp)] unsupport arch: $arch"
   #   ;;
   # esac
-  # # 
+  # #
+
+  # template os
+  # case $os in
+  # macos)
+  #   pm install -y mtg1
+  #   ;;
+  # ubuntu)
+  #   pm install -y mtg2
+  #   ;;
+  # centos)
+  #   pm install -y mtg3
+  #   ;;
+  # alpine)
+  #   pm install -y mtg4
+  #   ;;
+  # archlinux)
+  #   pm install -y mtg5
+  #   ;;
+  # archlinux)
+  #   pm install -y mtg5
+  #   ;;
+  # fedora)
+  #   pm install -y mtg6
+  #   ;;
+  # *)
+  #   log::error "[$(timestamp)] unsupport os: $os ($(uname -m))"
+  #   return 1
+  # esac
 
   # files
   local tmp_file="$name.tar.gz"
@@ -66,31 +95,31 @@ install() {
   log::info "[$(timestamp)][package][$name] installing ..."
   os::install $source_bin_file $usr_bin_dir $name
 
-# Complex like maven-mvnd
-#   # make executable
-#   log::info "[$(timestamp)][package][$name] making executable ..."
-#   chmod 755 $source_bin_file
+  # Complex like maven-mvnd
+  #   # make executable
+  #   log::info "[$(timestamp)][package][$name] making executable ..."
+  #   chmod 755 $source_bin_file
 
-#   # install
-#   if [ -d "$usr_lib_dir/${name}" ]; then
-#     log::info "[$(timestamp)][package][$name] removing old lib ..."
-#     sudo rm -rf $usr_lib_dir/${name}
-#   fi
-#   log::info "[$(timestamp)][package][$name] installing lib ..."
-#   sudo mv $lib_dir $usr_lib_dir/${name}
+  #   # install
+  #   if [ -d "$usr_lib_dir/${name}" ]; then
+  #     log::info "[$(timestamp)][package][$name] removing old lib ..."
+  #     sudo rm -rf $usr_lib_dir/${name}
+  #   fi
+  #   log::info "[$(timestamp)][package][$name] installing lib ..."
+  #   sudo mv $lib_dir $usr_lib_dir/${name}
 
-#   # install
-#   log::info "[$(timestamp)][package][$name] installing bin ..."
-#   sudo ln -sf $usr_lib_dir/${name}/bin/${PACKAGE_CORE_BIN_NAME} $usr_bin_dir/${PACKAGE_CORE_BIN_NAME}
+  #   # install
+  #   log::info "[$(timestamp)][package][$name] installing bin ..."
+  #   sudo ln -sf $usr_lib_dir/${name}/bin/${PACKAGE_CORE_BIN_NAME} $usr_bin_dir/${PACKAGE_CORE_BIN_NAME}
 
-#   # profile
-#   log::success "[$(timestamp)][package][$name] config MVND_HOME=$usr_lib_dir/${name} to global env file ..."
-#   local envs=$(
-#     cat <<-END
-# export MVND_HOME=$usr_lib_dir/${name}
-# END
-# )
-#   config::profile "# ZMICRO PACKAGE MAVEN-MVND" "$envs"
+  #   # profile
+  #   log::success "[$(timestamp)][package][$name] config MVND_HOME=$usr_lib_dir/${name} to global env file ..."
+  #   local envs=$(
+  #     cat <<-END
+  # export MVND_HOME=$usr_lib_dir/${name}
+  # END
+  # )
+  #   config::profile "# ZMICRO PACKAGE MAVEN-MVND" "$envs"
 
   # clean
   log::info "[$(timestamp)][package][$name] cleaning ..."
