@@ -14,11 +14,11 @@ core() {
 
   install "$@"
   if [ "$?" != "0" ]; then
-    log::error "[$(timstamp)] failed to install ${PACKAGE_NAME}."
+    log::error "[$(timestamp)] failed to install ${PACKAGE_NAME}."
     return 1
   fi
 
-  log::success "[$(timstamp)] succeed to install ${PACKAGE_NAME}."
+  log::success "[$(timestamp)] succeed to install ${PACKAGE_NAME}."
 }
 
 run() {
