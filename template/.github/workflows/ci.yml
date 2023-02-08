@@ -52,18 +52,5 @@ jobs:
           - macOS-latest
 
     steps:
-      - name: Setup Zmicro
-        uses: zmicro-design/action-setup-zmicro@v1
-
-      - name: Install
-        run: curl -o- https://raw.githubusercontent.com/${{ github.repository }}/master/install | sh -s -- ONE_LINE
-
-      - name: help
-        run: |
-          package=$(echo ${{ github.repository }} | awk -F '/' '{print $2}' | sed 's/package-//')
-          zmicro $package help
-
-      - name: version
-        run: |
-          package=$(echo ${{ github.repository }} | awk -F '/' '{print $2}' | sed 's/package-//')
-          zmicro $package version
+      - name: Setup Zmicro Package CI
+        uses: zmicro-design/action-zmicro-package-ci@v1
