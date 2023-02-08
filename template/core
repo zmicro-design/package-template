@@ -23,6 +23,7 @@ install() {
 
   # *)
   #   log::error "[$(timestamp)] unsupport platform: $platform"
+  #   return 1
   #   ;;
   # esac
 
@@ -34,6 +35,7 @@ install() {
   #   ;;
   # *)
   #   log::error "[$(timestamp)] unsupport arch: $arch"
+  #   return 1
   #   ;;
   # esac
   # # 
