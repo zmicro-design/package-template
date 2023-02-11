@@ -69,6 +69,16 @@ install() {
   #   return 1
   # esac
 
+  # # get latest version
+  # log::info "[$(timestamp)][package][$name] checking latest version ..."
+  # local latest_version=$(git::get_remote_latest_tag $PACKAGE_CORE_GIT_REPOSITORY)
+  # if [ "$?" != "0" ]; then
+  #   log::error "[$(timestamp)][package][$name] failed to get latest version ."
+  #   return 1
+  # fi
+  # PACKAGE_CORE_VERSION=$latest_version
+  # log::success "[$(timestamp)][package][$name] latest version: $PACKAGE_CORE_VERSION ."
+
   # files
   local tmp_file="$name.tar.gz"
   local source_bin_file="./${name}-${PACKAGE_CORE_VERSION#v}-${platform}-${arch}/$name"
