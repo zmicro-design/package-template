@@ -98,6 +98,10 @@ install() {
   # download
   log::info "[$(timestamp)][package][$name] downloading ..."
   os::download $tmp_file $url
+  if [ "$?" != "0" ]; then
+    log::error "[$(timestamp)][package][$name] failed to download from $url ."
+    return 1
+  fi
 
   # extract
   log::info "[$(timestamp)][package][$name] extracting ..."
