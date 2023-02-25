@@ -1,3 +1,3 @@
 NAME=package
-VERSION=v1.3.15
+VERSION=v1.4.0
 DESCRIPTION="A package template use for template plugin."
