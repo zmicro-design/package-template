@@ -1,5 +1,5 @@
-NAME=mtg
+NAME={{.PACKAGE_NAME}}
 VERSION=v0.0.0
 MODULE=package
-DESCRIPTION="Highly opinionated MTPROTO proxy for Telegram"
-HOMEPAGE="https://github.com/9seconds/mtg"
+DESCRIPTION="Zero's Service Manager"
+HOMEPAGE="https://github.com/zcorky/zmicro"

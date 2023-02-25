@@ -1,24 +1,24 @@
 #!/bin/bash
 
-export PACKAGE_NAME="mtg"
+export PACKAGE_NAME="{{.PACKAGE_NAME}}"
 import "$ZMICRO_PACKAGES_PATH/$PACKAGE_NAME/config"
 import "$ZMICRO_PACKAGES_PATH/$PACKAGE_NAME/core"
 
 help() {
   echo "Usage:"
-  echo "  zmicro mtg <args ...>"
+  echo "  zmicro {{.PACKAGE_NAME}} <args ...>"
   echo ""
 
-  mtg --help
+  {{.PACKAGE_NAME}} --help
 }
 
 version() {
-  mtg --version
+  {{.PACKAGE_NAME}} --version
 }
 
 core() {
   # context directory
-  local context="$ZMICRO_PACKAGES_DATA_PATH/mtg"
+  local context="$ZMICRO_PACKAGES_DATA_PATH/{{.PACKAGE_NAME}}"
   if [ ! -d "$context" ]; then
     mkdir -p $context
   fi
@@ -33,7 +33,7 @@ core() {
     version
     ;;
   *)
-    mtg "$@"
+    {{.PACKAGE_NAME}} "$@"
     ;;
   esac
 }
