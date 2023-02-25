@@ -82,11 +82,6 @@ install() {
   # files
   local tmp_file="$name.tar.gz"
   local source_bin_file="./${name}-${PACKAGE_CORE_VERSION#v}-${platform}-${arch}/$name"
-  # local target_bin_file="$usr_bin_dir/$name"
-
-  # prepare context
-  cd $tmp_dir
-
   # reference: https://github.com/9seconds/mtg/releases
   # example:
   #   https://github.com/9seconds/mtg/releases/download/v2.1.7/mtg-2.1.7-darwin-arm64.tar.gz
@@ -94,6 +89,22 @@ install() {
   # generate url
   local url="${PACKAGE_CORE_RELEASE_DOWNLOAD}/$PACKAGE_CORE_VERSION/${name}-${PACKAGE_CORE_VERSION#v}-${platform}-${arch}.tar.gz"
   log::debug "[$(timestamp)][package][$name][$kernel][$arch] url: $url, file: ${tmp_file}, tmp_dir: $tmp_dir"
+
+  log::info "[$(timestamp)][package][$name] os: $os"
+  log::info "[$(timestamp)][package][$name] arch: $arch"
+  log::info "[$(timestamp)][package][$name] kernel: $kernel"
+  log::info "[$(timestamp)][package][$name] platform: $platform"
+  log::info "[$(timestamp)][package][$name] usr_bin_dir: $usr_bin_dir"
+  log::info "[$(timestamp)][package][$name] source_bin_file: $source_bin_file"
+  log::info "[$(timestamp)][package][$name] url: $url"
+  log::info "[$(timestamp)][package][$name] tmp_dir: $tmp_dir"
+  log::info "[$(timestamp)][package][$name] tmp_file: $tmp_file"
+  if [ -n "$PLUGIN_PACKAGE_INSTALL_MODE" ]; then
+    log::info "[$(timestamp)][package][$name] mode: $PLUGIN_PACKAGE_INSTALL_MODE"
+  fi
+
+  # prepare context
+  cd $tmp_dir
 
   # download
   log::info "[$(timestamp)][package][$name] downloading ..."
@@ -137,9 +148,11 @@ install() {
   # )
   #   config::profile "# ZMICRO PACKAGE MAVEN-MVND" "$envs"
 
-  # clean
-  log::info "[$(timestamp)][package][$name] cleaning ..."
-  rm -rf $tmp_dir
+  if [ "$PLUGIN_PACKAGE_INSTALL_MODE" != "test" ]; then
+    # clean
+    log::info "[$(timestamp)][package][$name] cleaning ..."
+    rm -rf $tmp_dir
+  fi
 }
 
 export -f install
